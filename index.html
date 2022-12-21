@@ -1,0 +1,323 @@
+<html>
+<head>
+	<title>Treasure Hunt Maker</title>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5556515162447894"
+     crossorigin="anonymous"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+<link rel="manifest" href="icons/site.webmanifest">
+<link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="icons/favicon.ico">
+<meta name="msapplication-TileColor" content="#603cba">
+<meta name="msapplication-config" content="icons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+	<meta charset="UTF-8">
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="Treasure Hunt Maker">
+	<meta property="og:title" content="Treasure Hunt Maker" />
+	<meta name="twitter:card" content="summary_large_image">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://getbootstrap.com/docs/4.3/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.3/css/mdb.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	 crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="node_modules/xterm/css/xterm.css" />
+	<script src="node_modules/xterm/lib/xterm.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="js/disable.js"></script>
+	<link rel="stylesheet" href="assets/style.css">
+</head>
+<script type="text/javascript">
+
+	const letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+const lettersnumbers = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z","1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+const colours = ["red","yellow","orange","green","blue","purple","pink","black","white", "light blue", "dark blue", "dark green", "light green"]
+// & is letter, % is number, $ is colour
+	function play()
+{
+}
+function copy(text) {
+        navigator.clipboard.writeText(text).then(function() {
+}, function(err) {
+  console.error('Async: Could not copy text: ', err);
+});
+}
+function randomHuntCustom() {
+	const hunts = [
+"A postal box",
+"A Garden Gnome",
+"A number plate on a car with the letter & in it",
+"A number plate on a car with the number % in it",
+"A lost animal poster",
+"A telegraph pole ID with the letter & in it",
+"A telegraph pole ID with the number % in it",
+"An Ice Cream Truck",
+"A cactus",
+"A fire hydrant",
+"A construction vehicle",
+"A person wearing $ pants",
+"A person wearing $ socks",
+"A person wearing a $ shirt",
+"A person wearing a $ hoodie/jumper",
+"A $ car",
+"A building containing the colour $",
+"A street starting with the letter &",
+"Someone wearing a mask wrong",
+"A Stop Sign",
+"A zebra crossing",
+"A crow",
+"Someone riding a bike",
+"A school",
+"A flower pot",
+"Basketball Court",
+"Tennis Court",
+"A roundabout",
+"A set of swings"
+	]
+	let num = hunts.length
+function random_item(items) {
+    item = items[Math.floor(Math.random()*items.length)];
+    return item
+  }
+function getData(items, i, loops) {
+	const splitData = hunts
+	const randomNumber = Math.floor(Math.random() * splitData.length);
+	line = splitData.splice(randomNumber, 1);
+	duplicate(items, line) 
+	vars(line.toString(), items, i, loops)
+	return
+}
+function duplicate(items, line) {
+    if (items.includes(line.toString())) {
+        getData(items)
+        return
+    }
+}
+function replaceChar(origString, replaceChar, index)
+        {
+            let firstPart = origString.substr(0, index);
+            let lastPart = origString.substr(index + 1);
+  
+            let newString = 
+                firstPart + replaceChar + lastPart;
+              
+            return newString;
+        }
+function vars(line, items, i, loops) {
+    line = line.toString()
+    if (line.includes('$')) {
+        var colour = random_item(colours)
+		let position = line.indexOf('$')
+		if ((colour.charAt(0) === "a" || colour.charAt(0) === "e" || colour.charAt(0) === "i" || colour.charAt(0) === "o" || colour.charAt(0) === "u") && (line.charAt(position-2) === "A")) {
+			console.log(line+"\nwe got one\n"+colour)
+			line = replaceChar(line, "An", position-2)
+		}
+		if ((colour.charAt(0) === "a" || colour.charAt(0) === "e" || colour.charAt(0) === "i" || colour.charAt(0) === "o" || colour.charAt(0) === "u") && (line.charAt(position-2) === "a")) {
+			console.log(line+"\nwe got one again\n"+colour)
+			line = replaceChar(line, "an", position-2)
+		}
+        line = line.replace('$', colour)
+    }
+    if (line.includes('&')) {
+        var letter = random_item(letters)
+        line = line.replace('&', letter)
+    }
+    if (line.includes('%')) {
+        var number = random_item(numbers)
+        line = line.replace('%', number)
+    }
+    items.push(line.toString())
+    if (i === loops) {
+    }
+    return
+}
+
+loops = document.getElementById('amount').value
+console.log(num)
+document.getElementById('amount').max = num.toString()
+if (loops > num) {
+	document.getElementById('medicare-num-10').innerHTML = '<h3>\r\nCannot generate over '+num+' items</h3>'
+	return
+}
+if (!document.getElementById('amount').value) {
+	document.getElementById('amount').value = 1
+	loops = 1
+}
+items = [
+
+]
+for (let i = 0; i < loops; i++) {
+    getData(items, i, loops)
+	copy(items.join(' '))
+	document.getElementById('medicare-num-10').innerHTML = '<h3>\r\n'+items.join('</h3><h3>')+'</h3>'
+}
+}
+function randomHunt() {
+	const hunts = [
+"A postal box",
+"A Garden Gnome",
+"A number plate on a car with the letter & in it",
+"A number plate on a car with the number % in it",
+"A lost animal poster",
+"A telegraph pole ID with the letter & in it",
+"A telegraph pole ID with the number % in it",
+"An Ice Cream Truck",
+"A cactus",
+"A fire hydrant",
+"A construction vehicle",
+"A person wearing $ pants",
+"A person wearing $ socks",
+"A person wearing a $ shirt",
+"A person wearing $ hoodie/jumper",
+"A $ car",
+"A building containing the colour $",
+"A street starting with the letter &",
+"Someone wearing a mask wrong",
+"A Stop Sign",
+"A zebra crossing",
+"A crow",
+"Someone riding a bike",
+"A school",
+"A flower pot",
+"Basketball Court",
+"Tennis Court",
+"A roundabout",
+"A set of swings"
+	]
+	let num = hunts.length
+function random_item(items) {
+    item = items[Math.floor(Math.random()*items.length)];
+    return item
+  }
+function getData(items, i, loops) {
+	const splitData = hunts
+	const randomNumber = Math.floor(Math.random() * splitData.length);
+	line = splitData.splice(randomNumber, 1); 
+	console.log(line.toString())
+	vars(line.toString(), items, i, loops)
+}
+function duplicate(items, line) {
+    if (items.includes(line.toString())) {
+        getData(items)
+        return
+    }
+}
+function vars(line, items, i, loops) {
+    duplicate(items, line)
+    line = line.toString()
+    if (line.includes('$')) {
+        var colour = random_item(colours)
+        line = line.replace('$', colour)
+    }
+    if (line.includes('&')) {
+        var letter = random_item(letters)
+        line = line.replace('&', letter)
+    }
+    if (line.includes('%')) {
+        var number = random_item(numbers)
+        line = line.replace('%', number)
+    }
+    document.getElementById('medicare-num').innerHTML = line.toString()
+	copy(line.toString())
+    items.push(line.toString())
+    if (i === loops) {
+    }
+    return
+}
+
+loops = 1
+items = [
+
+]
+for (let i = 0; i < loops; i++) {
+    getData(items, i, loops)
+}
+}
+</script>
+<style>
+	.enter {
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        left:0px;
+        right:0px;
+		border: 0px solid black;
+		font-size: 28px;
+		color: white;
+		font-weight: 200;
+		font-family: "Roboto", sans-serif;
+		overflow:auto;
+		background-color: #171b1f;
+        position:relative;
+		transition: 0.3s;
+		text-align: center;
+	}
+    a {
+        color:inherit;
+    }
+    a:hover {
+        color:inherit;
+    }
+	.enter:hover {
+		background-color: #757575;
+	}
+    body {
+  -webkit-touch-callout: none; 
+  -webkit-user-select: none; 
+   -khtml-user-select: none; 
+     -moz-user-select: none; 
+      -ms-user-select: none; 
+         user-select: none; 
+color: white;
+overflow:auto;
+background-color: #171b1f;
+font-family: "Roboto", sans-serif;
+font-weight: 500;
+
+margin-top: 15vh;
+
+}
+</style>
+</head>
+<div class="topnav">
+	<a href="https://seall.dev">Main Site</a> 
+</div>
+<body>
+	<div id="soundtrack"></div>
+	<div class="container mt-3 text-center" style="overflow:hidden;		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+		<h1 class="lo" , style="font-weight:400;padding-top:40px" class="featurette-heading">Treasure Hunt Generator</h1>
+		<p class="lo">All generated hunts are copied to your clipboard</p>
+		<br>
+			<h3 id="medicare-num" style="display:inline;width: 200px;text-align: center;"></h3>
+			</h3>
+		<br>
+		<h3 style="padding-top:10px"></h3>
+		<button class="enter" onclick="randomHunt();">Generate</button>
+		<h3 style="padding-bottom:40px;"></h3>
+		<h3 style="padding-bottom:20px"></h3>
+		<h3 style="text-align:center;font-size:10px">Original code by <a href="SSSEAL-C" style="font-size:10px"target="_blank" rel="noopener noreferrer" class="enter">seall.dev</a></h3>
+		<h3 style="padding-bottom:40px"></h3>
+	</div>
+    <h3 style="padding-bottom:5px"></h3>
+	<div class="container mt-3 text-center" style="overflow:hidden;		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+		<h1 class="lo" , style="font-weight:400;padding-top:40px" class="featurette-heading">Custom Amount Treasure Hunt Generator</h1>
+		<p class="lo">All generated hunts are copied to your clipboard</p>
+		<br>
+		<input type="number" min="1" style="width:80px;color:white;" max="1000" autocomplete="off" id="amount"></input>
+		<br>
+		<br>
+			<h3 id="medicare-num-10" style="display:inline;width: 200px;text-align: center;" class="enter"></h3>
+		<br>
+		<h3 style="padding-top:10px"></h3>
+		<button class="enter" onclick="randomHuntCustom();">Generate</button>
+		<h3 style="padding-bottom:40px;"></h3>
+		<h3 style="padding-bottom:20px"></h3>
+		<h3 style="text-align:center;font-size:10px">Original code by <a href="seall.dev" style="font-size:10px"target="_blank" rel="noopener noreferrer" class="enter">SSSEAL-C</a></h3>
+		<h3 style="padding-bottom:40px"></h3>
+	</div>
+	<h3 style="padding-bottom:5px"></h3>
+    <h3 style="text-align:center;font-size:10px">Maintained and redesigned by <a href="https://ssseal-c.github.io/website-idea/" style="font-size:10px"target="_blank" rel="noopener noreferrer" class="enter">SSSEAL-C</a></h3>
+</body>
+</html>
