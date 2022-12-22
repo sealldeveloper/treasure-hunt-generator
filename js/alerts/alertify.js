@@ -1477,7 +1477,7 @@
             for(var x=0;x<tabbables.length;x+=1){
                 var tabbable = tabbables[x];
                 //check if visible
-                if(!!(tabbable.offsetParent || tabbable.offsetWidth || tabbable.offsetHeight || tabbable.getClientRects().length)){
+                if(tabbable.offsetParent || tabbable.offsetWidth || tabbable.offsetHeight || tabbable.getClientRects().length){
                     return tabbable;
                 }
             }
